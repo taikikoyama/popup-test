@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>戻るボタンポップアップ（CTA付き）</title>
+  <title>ポップアップ（戻るのみ）</title>
   <style>
     #backPopup {
       display: none;
@@ -51,7 +51,7 @@
   </style>
 </head>
 <body>
-  <p>これはテストページです。戻るボタンを押すと、ポップアップが表示されます。</p>
+  <p>これはテストページです。戻るボタンを押すと毎回ポップアップが表示されます。</p>
 
   <!-- ポップアップ -->
   <div id="backPopup">
@@ -62,20 +62,21 @@
   </div>
 
   <script>
-    let hasShownBackPopup = false;
+    function showPopup() {
+      document.getElementById('backPopup').style.display = 'block';
+    }
 
+    // 戻るボタン対応：履歴を積んでpopstateを発火させる
     window.addEventListener('load', () => {
-      window.history.pushState({ page: 1 }, '', '');
+      for (let i = 0; i < 3; i++) {
+        history.pushState(null, '', '');
+      }
     });
 
-    window.addEventListener('popstate', function (e) {
-      if (!hasShownBackPopup) {
-        document.getElementById('backPopup').style.display = 'block';
-        window.history.pushState({ page: 1 }, '', '');
-        hasShownBackPopup = true;
-      } else {
-        history.back();
-      }
+    // 戻る操作で毎回ポップアップを出す
+    window.addEventListener('popstate', () => {
+      showPopup();
+      history.pushState(null, '', '');
     });
   </script>
 </body>
