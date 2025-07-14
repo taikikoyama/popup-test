@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>戻るボタンポップアップ（CTA付き）</title>
+  <style>
+    #backPopup {
+      display: none;
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 400px;
+      background: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      z-index: 9999;
+      text-align: center;
+      font-family: sans-serif;
+    }
+
+    #backPopup h2 {
+      margin-top: 0;
+      font-size: 20px;
+      color: #333;
+    }
+
+    .cta-btn {
+      margin-top: 16px;
+      background-color: #ff6b6b;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .close-btn {
+      margin-top: 12px;
+      display: block;
+      color: #888;
+      font-size: 14px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <p>これはテストページです。戻るボタンを押すと、ポップアップが表示されます。</p>
+
+  <!-- ポップアップ -->
+  <div id="backPopup">
+    <h2>ちょっと待って！🎁</h2>
+    <p>今だけの限定特典をご確認ください！</p>
+    <a href="https://example.com/special-offer" class="cta-btn" target="_blank">▶ 今すぐ特典を見る</a>
+    <span class="close-btn" onclick="document.getElementById('backPopup').style.display='none'">閉じる</span>
+  </div>
+
+  <script>
+    let hasShownBackPopup = false;
+
+    window.addEventListener('load', () => {
+      window.history.pushState({ page: 1 }, '', '');
+    });
+
+    window.addEventListener('popstate', function (e) {
+      if (!hasShownBackPopup) {
+        document.getElementById('backPopup').style.display = 'block';
+        window.history.pushState({ page: 1 }, '', '');
+        hasShownBackPopup = true;
+      } else {
+        history.back();
+      }
+    });
+  </script>
+</body>
+</html>
